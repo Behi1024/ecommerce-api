@@ -1,5 +1,9 @@
 import express from "express";
 import { Category } from "../models/Category";
+import {
+  createCategorySchema,
+  updateCategorySchema,
+} from "../schemas/categorySchema";
 
 const router = express.Router();
 
@@ -10,18 +14,22 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  const validatedData = createCategorySchema.parse(req.body);
+
   const newCategory = await Category.create({
-    name: req.body.name,
+    name: validatedData.name,
   });
 
   res.status(201).json(newCategory);
 });
 
 router.patch("/:id", async (req, res) => {
+  const validatedData = updateCategorySchema.parse(req.body);
+
   const updatedCategory = await Category.findByIdAndUpdate(
     req.params.id,
     {
-      name: req.body.name,
+      name: validatedData.name,
     },
     {
       new: true,
@@ -30,7 +38,6 @@ router.patch("/:id", async (req, res) => {
 
   res.json(updatedCategory);
 });
-
 router.delete("/:id", async (req, res) => {
   await Category.findByIdAndDelete(req.params.id);
 

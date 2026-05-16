@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./db";
 import categoriesRouter from "./routes/categories";
+import { errorHandler } from "./middleware/errorHandler";
 
 dotenv.config();
 
@@ -13,6 +14,8 @@ app.use("/categories", categoriesRouter);
 app.get("/", (req, res) => {
   res.send("ecommerce-api is running");
 });
+
+app.use(errorHandler);
 
 connectDB();
 
