@@ -1,33 +1,33 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema(
+const orderSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
-      trim: true,
     },
 
-    description: {
-      type: String,
+    productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
       required: true,
-      trim: true,
     },
 
-    price: {
+    quantity: {
       type: Number,
       required: true,
+      min: 1,
     },
 
-    categoryId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+    totalPrice: {
+      type: Number,
       required: true,
+      min: 0,
     },
   },
   {
     timestamps: true,
-
     toJSON: {
       transform: (_doc, ret: any) => {
         ret.id = ret._id.toString();
@@ -41,4 +41,4 @@ const productSchema = new mongoose.Schema(
   },
 );
 
-export const Product = mongoose.model("Product", productSchema);
+export const Order = mongoose.model("Order", orderSchema);

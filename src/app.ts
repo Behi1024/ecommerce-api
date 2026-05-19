@@ -5,6 +5,7 @@ import categoriesRouter from "./routes/categories";
 import { errorHandler } from "./middleware/errorHandler";
 import productsRouter from "./routes/products";
 import usersRouter from "./routes/users";
+import ordersRouter from "./routes/orders";
 
 dotenv.config();
 const app = express();
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 app.use("/categories", categoriesRouter);
 app.use("/products", productsRouter);
 app.use("/users", usersRouter);
+app.use("/orders", ordersRouter);
 
 app.get("/", (req, res) => {
   res.send("ecommerce-api is running");
